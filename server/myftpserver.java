@@ -241,14 +241,15 @@ class ClientThreadHandler implements Runnable{
 //        System.out.println(cmd.split(" ").length);
         try {dos = new DataOutputStream(clientInstance.getOutputStream());}
         catch(IOException io) {io.printStackTrace();}
-        if (!cmd.contains(" ") || cmd.split(" ").length < 2) {
-            try {
-                System.out.println("Invalid get command recevied");
-                dos.writeUTF("Error: Invalid 'get' command, check man page for details");
-            } catch (IOException io) {
-                io.printStackTrace();
-            }
-        }
+        // if (!cmd.contains(" ") || cmd.split(" ").length < 2) {
+        //     try {
+        //         System.out.println("Invalid get command recevied");
+        //         dos.writeUTF("Error: Invalid 'get' command, check man page for details");
+        //         return;
+        //     } catch (IOException io) {
+        //         io.printStackTrace();
+        //     }
+        // }
 //        get the filename to be transfered
         String file = cmd.split(" ")[1];
         File cdir = new File(System.getProperty("user.dir"));
@@ -259,18 +260,20 @@ class ClientThreadHandler implements Runnable{
                 dos.writeUTF("Error: cannot access '" + file + "': No such file or directory or unable to read file");
                 return;
             } else {
-                dos.writeUTF("receiving " + sendFile.length() + " bytes...");
+                dos.writeUTF("server is sending " + sendFile.length() + " bytes...");
                 System.out.println("sending File " + file + " to client " + address);
             }
+            dos.writeLong(sendFile.length());
             String id;
             while (true) {
                 UUID processID = UUID.randomUUID();
                 id = processID.toString().substring(0, 4);
+                System.out.println("Command ID : " + id)
                 if (processRecord.containsKey(id))
                     continue;
                 else {
                     processRecord.put(id, Boolean.FALSE);
-                    dos.writeUTF(id.toString());
+                    dos.writeUTF(id.toString()); //sending command id to client
                     break;
                 }
             }
@@ -286,7 +289,6 @@ class ClientThreadHandler implements Runnable{
 //            open file that is to be transfered
             FileInputStream fis = new FileInputStream(sendFile);
             int bytes = 0;
-            dos.writeLong(sendFile.length());
 //            break file in chucks and send it to client
             byte[] buffer = new byte[4 * 1024];
             while ((bytes = fis.read(buffer)) != -1) {
