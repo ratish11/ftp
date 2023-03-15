@@ -369,9 +369,9 @@ class ClientThreadHandler implements Runnable{
         }
         File cdir = new File(System.getProperty("user.dir"));
         String destdir = cmd.split(" ")[1];
-        File dest = new File(destdir);
-        File destdirname = new File(dest.getAbsolutePath());
-        System.out.println(destdirname);
+        File destdirname = new File(destdir);
+        // File destdirname = new File(dest.getAbsolutePath());
+        // System.out.println(destdirname);
         try {
             if(destdir.equals("..")) {
                 System.setProperty("user.dir", cdir.getParent());
@@ -379,16 +379,16 @@ class ClientThreadHandler implements Runnable{
                 System.out.println("INFO: directory changed to " + cdir.getParent());
                 return;
             }
-            // if(!destdirname.isAbsolute()){
-            //     System.setProperty("user.dir", String.valueOf(cdir + "/" + destdirname));
-            //     dos.writeUTF("Directory is set to "+System.getProperty("user.dir"));
-            //     return;
-            // }
-            // if(!destdirname.isDirectory()) {
-            //     System.out.println("Error: directory doesn't exists!");
-            //     dos.writeUTF("Error: directory doesn't exists!");
-            //     return;
-            // }
+            if(!destdirname.isAbsolute()){
+                System.setProperty("user.dir", String.valueOf(cdir + "/" + destdirname));
+                dos.writeUTF("Directory is set to "+System.getProperty("user.dir"));
+                return;
+            }
+            if(!destdirname.isDirectory()) {
+                System.out.println("Error: directory doesn't exists!");
+                dos.writeUTF("Error: directory doesn't exists!");
+                return;
+            }
             System.setProperty("user.dir", String.valueOf(destdirname));
             dos.writeUTF("INFO: directory changed to " + destdirname);
             System.out.println("INFO: directory changed to " + destdirname);
