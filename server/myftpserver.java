@@ -268,7 +268,7 @@ class ClientThreadHandler implements Runnable{
             while (true) {
                 UUID processID = UUID.randomUUID();
                 id = processID.toString().substring(0, 4);
-                System.out.println("Command ID : " + id)
+                System.out.println("Command ID : " + id);
                 if (processRecord.containsKey(id))
                     continue;
                 else {
