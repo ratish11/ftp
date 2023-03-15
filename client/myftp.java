@@ -87,10 +87,17 @@ public class myftp {
         File getFile = new File(cdir, file);
 //        receive file from client
         try {
+            if(getFile.exists() || !cdir.canWrite()) {
+//                error if file already exists or file cannot be written into the dir
+                System.out.println("Error: file already exists or don't have access");
+                return;
+            }
             int bytes = 0;
             FileOutputStream fos = new FileOutputStream(getFile);
             long fileSize = dis.readLong(); // read file size
             System.out.println("receiving " + fileSize + " bytes...");
+            String cid = dis.readUTF();
+            System.out.print("Command ID : " cid);
             byte[] buffer = new byte[4 * 1024];
             while (fileSize > 0 &&
                     (bytes = dis.read(buffer, 0, (int)Math.min(buffer.length, fileSize))) != -1) {
@@ -98,11 +105,6 @@ public class myftp {
                     fos.write(buffer, 0, bytes);
                 }
                 fileSize -= bytes;
-            }
-            if(getFile.exists() || !cdir.canWrite()) {
-//                error if file already exists or file cannot be written into the dir
-                System.out.println("Error: file already exists or don't have access");
-                return;
             }
             System.out.println("File is Received");
             fos.close();
