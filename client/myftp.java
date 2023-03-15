@@ -93,7 +93,7 @@ public class myftp {
                 return;
             }
             int bytes = 0;
-            FileOutputStream fos = new FileOutputStream(getFile);
+            FileOutputStream fos = new FileOutputStream(getFile, true);
             long fileSize = dis.readLong(); // read file size
             System.out.println("receiving " + fileSize + " bytes...");
             String cid = dis.readUTF();
@@ -142,7 +142,7 @@ public class myftp {
             }
 //            open file that is to be transfered
             System.out.println("Transferring file to server");
-            FileInputStream fis = new FileInputStream(sendFile, true);
+            FileInputStream fis = new FileInputStream(sendFile);
             int bytes = 0;
             dos.writeLong(sendFile.length());
 //            break file in chucks and send it to client
