@@ -371,6 +371,7 @@ class ClientThreadHandler implements Runnable{
         String destdir = cmd.split(" ")[1];
         File dest = new File(destdir);
         File destdirname = new File(dest.getAbsolutePath());
+        System.out.println(destdirname);
         try {
             if(destdir.equals("..")) {
                 System.setProperty("user.dir", cdir.getParent());
