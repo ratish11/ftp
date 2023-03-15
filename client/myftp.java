@@ -376,8 +376,10 @@ class GetInBackend implements Runnable {
             dos.writeUTF(command);
             String response = dis.readUTF();
             if(!response.contains("sending")){
-                System.out.println(response); return;
+                System.out.println(response); 
+                return;
             }
+            long fileSize = dis.readLong(); // read file size
             String cid = dis.readUTF();
             System.out.println("Command ID is : " + cid);
             procTable.put(cid, Boolean.FALSE);
@@ -391,7 +393,7 @@ class GetInBackend implements Runnable {
                 int bytes = 0;
                 FileOutputStream fos = new FileOutputStream(getFile);
                 rmFiles.put(cid, String.valueOf(getFile));
-                long fileSize = dis.readLong(); // read file size
+                
                 System.out.println("receiving " + fileSize + " bytes...");
                 byte[] buffer = new byte[4 * 1024];
                 while (fileSize > 0 && (bytes = dis.read(buffer, 0, (int)Math.min(buffer.length, fileSize))) != -1) {
@@ -416,7 +418,7 @@ class GetInBackend implements Runnable {
 //                }
                 rmFiles.remove(cid);
                 procTable.remove(cid);
-                System.out.println("\n"+getFile+" File Received");
+                System.out.println("\n"+getFile+" file received");
                 System.out.print("myftp> ");
                 dos.writeUTF("quit");
                 s.close();
