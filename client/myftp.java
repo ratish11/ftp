@@ -97,7 +97,7 @@ public class myftp {
             long fileSize = dis.readLong(); // read file size
             System.out.println("receiving " + fileSize + " bytes...");
             String cid = dis.readUTF();
-            System.out.print("Command ID : " cid);
+            System.out.print("Command ID : " + cid);
             byte[] buffer = new byte[4 * 1024];
             while (fileSize > 0 &&
                     (bytes = dis.read(buffer, 0, (int)Math.min(buffer.length, fileSize))) != -1) {
