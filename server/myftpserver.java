@@ -303,7 +303,6 @@ class ClientThreadHandler implements Runnable{
             lockRecord.remove(path);
             processRecord.remove(id);
             System.out.println("file transferred");
-            dos.writeUTF("file received..");
 //            close the file after transfer
             fis.close();
             dos.flush();
