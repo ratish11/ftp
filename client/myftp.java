@@ -142,7 +142,7 @@ public class myftp {
             }
 //            open file that is to be transfered
             System.out.println("Transferring file to server");
-            FileInputStream fis = new FileInputStream(sendFile);
+            FileInputStream fis = new FileInputStream(sendFile, true);
             int bytes = 0;
             dos.writeLong(sendFile.length());
 //            break file in chucks and send it to client
