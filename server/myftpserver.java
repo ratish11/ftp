@@ -384,11 +384,11 @@ class ClientThreadHandler implements Runnable{
             //     dos.writeUTF("Directory is set to "+System.getProperty("user.dir"));
             //     return;
             // }
-            if(!destdirname.isDirectory()) {
-                System.out.println("Error: directory doesn't exists!");
-                dos.writeUTF("Error: directory doesn't exists!");
-                return;
-            }
+            // if(!destdirname.isDirectory()) {
+            //     System.out.println("Error: directory doesn't exists!");
+            //     dos.writeUTF("Error: directory doesn't exists!");
+            //     return;
+            // }
             System.setProperty("user.dir", String.valueOf(destdirname));
             dos.writeUTF("INFO: directory changed to " + destdirname);
             System.out.println("INFO: directory changed to " + destdirname);
