@@ -299,6 +299,7 @@ class ClientThreadHandler implements Runnable{
                     return;
                 }
                 dos.write(buffer, 0, bytes);
+                
             }
             lockRecord.remove(path);
             processRecord.remove(id);
