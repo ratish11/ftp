@@ -81,6 +81,7 @@ public class myftp {
                     terminateThread.start();
                 }
                 else if(cmd.trim().equals("quit")) {quit(cmd);s.close(); break;}
+                else if(cmd.trim().equals("quit thread")) {quit(cmd);s.close(); break;}
                 else {System.out.println("Error: Invalid input");}
             }
         } catch (IOException io) {
@@ -93,7 +94,8 @@ public class myftp {
         dos = new DataOutputStream(s.getOutputStream());
         dos.writeUTF(cmd);
         System.out.println("Until next time Dawgs.....!!!");
-        System.exit(0);
+        if(cmd.contains("thread"))
+            System.exit(0);
     }
     public static void get(String cmd) {
         try {
@@ -326,7 +328,7 @@ class MKInBackend implements Runnable {
         try {
             dos.writeUTF(command.substring(0, command.length() - 1));
             System.out.println(dis.readUTF());
-            dos.writeUTF("quit");
+            dos.writeUTF("quit thread");
             dos.flush();
         } catch(IOException io) {
             io.printStackTrace();
@@ -353,7 +355,7 @@ class PWDInBackend implements Runnable {
         try {
             dos.writeUTF(command.substring(0, command.length() - 1));
             System.out.println(dis.readUTF());
-            dos.writeUTF("quit");
+            dos.writeUTF("quit thread");
             dos.flush();
         } catch(IOException io) {
             io.printStackTrace();
@@ -381,7 +383,7 @@ class DELInBackend implements Runnable {
         try {
             dos.writeUTF(command.substring(0, command.length() - 1));
             System.out.println(dis.readUTF());
-            dos.writeUTF("quit");
+            dos.writeUTF("quit thread");
             dos.flush();
         } catch(IOException io) {
             io.printStackTrace();
@@ -408,7 +410,7 @@ class CDInBackend implements Runnable {
         try {
             dos.writeUTF(command.substring(0, command.length() - 1));
             System.out.println(dis.readUTF());
-            dos.writeUTF("quit");
+            dos.writeUTF("quit thread");
             dos.flush();
         } catch(IOException io) {
             io.printStackTrace();
@@ -471,7 +473,7 @@ class PutInBackend implements Runnable {
                 byte[] buffer = new byte[4*1024];
                 while((bytes = fis.read(buffer)) != -1) {
                     if(procTable.get(cid).equals(Boolean.TRUE)){
-                        dos.writeUTF("quit");
+                        dos.writeUTF("quit thread");
                         dos.flush();
                         procTable.remove(cid);
                         fis.close();
@@ -485,7 +487,7 @@ class PutInBackend implements Runnable {
                 dos.writeUTF("file upload complete..");
                 System.out.println("file upload complete..");
                 procTable.remove(cid);
-                dos.writeUTF("quit");
+                dos.writeUTF("quit thread");
                 //close the file after transfer and quit the thread and close connection
                 fis.close();
                 dos.flush();
@@ -550,7 +552,7 @@ class GetInBackend implements Runnable {
                         fileSize -= bytes;
                     } else {
                         getFile.delete();
-                        dos.writeUTF("quit");
+                        dos.writeUTF("quit thread");
                         // rmFiles.remove(cid);
                         procTable.remove(cid);
                         fos.close();
@@ -568,7 +570,7 @@ class GetInBackend implements Runnable {
                 procTable.remove(cid);
                 System.out.println("\n"+getFile+" file received");
                 System.out.print("myftp> ");
-                dos.writeUTF("quit");
+                dos.writeUTF("quit thread");
                 s.close();
                 fos.close();
                 dos.flush();
