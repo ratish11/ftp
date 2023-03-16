@@ -549,7 +549,7 @@ class GetInBackend implements Runnable {
                     } else {
                         getFile.delete();
                         dos.writeUTF("quit");
-                        rmFiles.remove(cid);
+                        // rmFiles.remove(cid);
                         procTable.remove(cid);
                         fos.close();
                         dos.flush();
