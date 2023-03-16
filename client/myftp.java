@@ -22,7 +22,7 @@ public class myftp {
             Thread cleaning = new Thread(new GarbageCollector(procTable, rmFiles));
             cleaning.start();
             while(s.isConnected()) {
-                Thread.sleep(100);
+                Thread.sleep(500);
 //                Send command to server and call the function accordingly
                 System.out.print("\nmyftp> ");
                 String cmd = userInput.nextLine();
