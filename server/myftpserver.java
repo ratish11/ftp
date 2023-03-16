@@ -539,26 +539,21 @@ class ClientThreadHandler implements Runnable{
             }
             else {
                 File dest = new File(cmd.split(" ")[cmd.split(" ").length -1]);
-                if(dest.isAbsolute() && dest.canRead() && dest.isDirectory()) {
+                if(dest.isAbsolute() && dest.canRead() && (dest.isDirectory() || dest.isFile())) {
                     lsPath = dest;
                     System.out.println(String.valueOf(lsPath));
                     dos.writeUTF("sending list...");
-                } else if (!dest.isAbsolute()&& dest.canRead() && dest.isDirectory()) { // if path is non abs, it does not detects ../../filesname
+                } else if (!dest.isAbsolute()&& dest.canRead() && (dest.isDirectory() || dest.isFile())) { // if path is non abs, it does not detects ../../filesname
                     lsPath = new File(String.valueOf(file),String.valueOf(dest));
                     System.out.println(String.valueOf(lsPath));
-                    dos.writeUTF("1st else if sending list...");
+                    dos.writeUTF("sending list...");
                 } else {
-                    try {
-                        lsPath = new File(String.valueOf(file),String.valueOf(dest));
-                        System.out.println(String.valueOf(lsPath.listFiles()));
-                        fileList = lsPath.listFiles();
-                        dos.writeUTF("lfojewfjsending list...");
-                    } catch (IOException io) {
-                        io.printStackTrace();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        dos.writeUTF("Error: Unknown Error");
-                        System.out.println("Error: Unknown Error");
+                    lsPath = new File(String.valueOf(file),String.valueOf(dest));
+                    if(lsPath.listFiles() != null) {
+                        dos.writeUTF("sending list...");
+                    } else {
+                        dos.writeUTF("Error: file or directory doesn't exists");
+                        System.out.println("Error: file or directory doesn't exists");
                         return;
                     }
                 }

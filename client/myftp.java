@@ -246,7 +246,6 @@ public class myftp {
             dos = new DataOutputStream(s.getOutputStream());
             dos.writeUTF(cmd);
             String response = dis.readUTF();
-            System.out.println(response);
             if(response.contains("Error")){
                 System.out.println(response);
                 return;
