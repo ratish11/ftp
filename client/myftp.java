@@ -80,7 +80,7 @@ public class myftp {
                     Thread terminateThread = new Thread(new Terminate(hostname, tport, cmd, procTable));
                     terminateThread.start();
                 }
-                else if(cmd.trim().equals("quit")) {System.out.println("Until next time Dawgs.....!!!");quit(cmd);s.close(); break;}
+                else if(cmd.trim().equals("quit")) {quit(cmd);s.close(); break;}
                 else {System.out.println("Error: Invalid input");}
             }
         } catch (IOException io) {
@@ -92,6 +92,7 @@ public class myftp {
     public static void quit(String cmd) throws IOException {
         dos = new DataOutputStream(s.getOutputStream());
         dos.writeUTF(cmd);
+        System.out.println("Until next time Dawgs.....!!!");
     }
     public static void get(String cmd) {
         try {
