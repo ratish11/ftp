@@ -55,18 +55,18 @@ public class myftp {
                 }
                 else if(cmd.split(" ", 2)[0].equals("pwd"))
                     abspath(cmd);
-                if(cmd.trim().startsWith("delete") && cmd.trim().endsWith("&")) {
+                else if(cmd.trim().startsWith("delete") && cmd.trim().endsWith("&")) {
                     Thread delThread = new Thread(new DELInBackend(hostname, nport, cmd));
                     delThread.start();
                     continue;
                 }
                 else if(cmd.split(" ", 2)[0].equals("delete"))
                     delete(cmd);
-                // else if(cmd.trim().startsWith("mkdir") && cmd.trim().endsWith("&")) {
-                //     Thread mkThread = new Thread(new MKInBackend(hostname, nport, cmd, procTable, rmFiles));
-                //     mkThread.start();
-                //     continue;
-                // }
+                else if(cmd.trim().startsWith("mkdir") && cmd.trim().endsWith("&")) {
+                    Thread mkThread = new Thread(new MKInBackend(hostname, nport, cmd,));
+                    mkThread.start();
+                    continue;
+                }
                 else if(cmd.split(" ", 2)[0].equals("mkdir"))
                     mkdir(cmd);
                 // else if(cmd.trim().startsWith("mkdir") && cmd.trim().endsWith("&")) {
@@ -302,6 +302,33 @@ public class myftp {
             System.out.println("Error - Connection Failed");
             System.exit(0);
         }
+    }
+}
+class MKInBackend implements Runnable {
+    private Socket s;
+    private DataInputStream dis;
+    private DataOutputStream dos;
+    private String command;
+
+    public MKInBackend(String hostname, int port, String command) {
+        try {
+            this.command = command;
+            this.s = new Socket(hostname, port);
+            dis = new DataInputStream(this.s.getInputStream());
+            dos = new DataOutputStream(this.s.getOutputStream());
+        } catch(IOException io) {
+            Logger.getLogger(PWDInBackend.class.getName()).log(Level.SEVERE, null, io);
+        }
+    }
+    public void run() {
+        try {
+            dos.writeUTF(command.substring(0, command.length() - 1));
+            System.out.println(dis.readUTF());
+            dos.writeUTF("quit");
+            dos.flush();
+        } catch(IOException io) {
+            io.printStackTrace();
+        } 
     }
 }
 class PWDInBackend implements Runnable {
