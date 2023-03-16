@@ -227,10 +227,10 @@ class ClientThreadHandler implements Runnable{
                     mkdir(cmd);
                 if(cmd.split(" ", 2)[0].equals("ls"))
                     list(cmd);
-                if(cmd.trim().equals("quit")) {
+                if(cmd.split(" ", 2)[0].equals("quit")) {
                     System.out.println("Until Next Time Dawgs !!!!");
                     clientInstance.close();
-                    System.exit(0);
+                    if(!cmd.contains("thread")) System.exit(0);
                     return;
                 }
             }
