@@ -555,7 +555,7 @@ class GetInBackend implements Runnable {
                         getFile.delete();
                         dos.writeUTF("quit thread");
                         // rmFiles.remove(cid);
-                        procTable.remove(cid);
+                        // procTable.remove(cid);
                         fos.close();
                         dos.flush();
                         s.close();
