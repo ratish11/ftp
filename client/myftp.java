@@ -54,6 +54,7 @@ public class myftp {
                 else if(cmd.startsWith("terminate")) {
                     Thread terminateThread = new Thread(new Terminate(hostname, tport, cmd, procTable));
                     terminateThread.start();
+                    quit(cmd);
                 }
                 else if(cmd.trim().equals("quit")) {System.out.println("Until next time Dawgs.....!!!");quit(cmd);s.close(); break;}
                 else {System.out.println("Error: Invalid input");}
