@@ -234,7 +234,7 @@ class ClientThreadHandler implements Runnable{
                 }
             }
         } catch(IOException io) {
-            Logger.getLogger(ClientThreadHandler.class.getName()).log(Level.SEVERE, null, io);
+            io.printStackTrace();
         }
     }
 
