@@ -418,13 +418,14 @@ class ClientThreadHandler implements Runnable{
         // File destdirname = new File(dest.getAbsolutePath());
         // System.out.println(destdirname);
         try {
+            if()
             if(destdir.equals("..")) {
                 System.setProperty("user.dir", cdir.getParent());
                 dos.writeUTF("INFO: directory changed to " + cdir.getParent());
                 System.out.println("INFO: directory changed to " + cdir.getParent());
                 return;
             }
-            if(!destdirname.isAbsolute()){
+            if(!destdirname.isAbsolute() && destdirname.isDirectory()){
                 System.setProperty("user.dir", String.valueOf(cdir + "/" + destdirname));
                 dos.writeUTF("Directory is set to "+System.getProperty("user.dir"));
                 return;
