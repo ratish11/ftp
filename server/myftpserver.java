@@ -207,9 +207,9 @@ class ClientThreadHandler implements Runnable{
     public void run() {
         Logger.getLogger(ClientThreadHandler.class.getName()).log(Level.INFO, "Client Connected");
         try {
-            dis = new DataInputStream(clientInstance.getInputStream());
-//                listening continuously to what client has to say
             while(true) {
+                dis = new DataInputStream(clientInstance.getInputStream());
+//                listening continuously to what client has to say
                 String cmd = dis.readUTF();
 //                for(String a : cmd.split(" ", 2)){System.out.println(a);}
                 System.out.println();
@@ -379,9 +379,9 @@ class ClientThreadHandler implements Runnable{
                     (bytes = dis.read(buffer, 0, (int)Math.min(buffer.length, fileSize))) != -1) {
                 if (processRecord.get(cid).equals(Boolean.TRUE)) {
                     fos.close();
+                    getFile.delete();
                     lockRecord.remove(path);
                     processRecord.remove(cid);
-                    getFile.delete();
                     return;
                 }
                 fos.write(buffer, 0, bytes);
