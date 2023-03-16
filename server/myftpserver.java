@@ -552,7 +552,7 @@ class ClientThreadHandler implements Runnable{
                         lsPath = new File(String.valueOf(file),String.valueOf(dest));
                         System.out.println(String.valueOf(lsPath.listFiles()));
                         fileList = lsPath.listFiles();
-                        dos.writeUTF("sending list...");
+                        dos.writeUTF("lfojewfjsending list...");
                     } catch (IOException io) {
                         io.printStackTrace();
                     } catch (Exception e) {
