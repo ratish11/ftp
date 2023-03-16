@@ -22,9 +22,9 @@ public class myftp {
             Thread cleaning = new Thread(new GarbageCollector(procTable, rmFiles));
             cleaning.start();
             while(s.isConnected()) {
-                Thread.sleep(500);
+                Thread.sleep(300);
 //                Send command to server and call the function accordingly
-                System.out.print("\nmyftp> ");
+                System.out.print("myftp> ");
                 String input = userInput.nextLine();
                 String cmd = input.trim();
                 if(cmd.trim().startsWith("get") && cmd.trim().endsWith("&")) {
