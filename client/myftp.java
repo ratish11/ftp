@@ -568,7 +568,7 @@ class GetInBackend implements Runnable {
 //                }
                 rmFiles.remove(cid);
                 procTable.remove(cid);
-                System.out.println("\n"+getFile+" file received");
+                System.out.println(getFile+" file received");
                 System.out.print("myftp> ");
                 dos.writeUTF("quit thread");
                 s.close();
