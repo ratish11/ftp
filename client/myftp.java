@@ -483,7 +483,7 @@ class PutInBackend implements Runnable {
                     dos.write(buffer, 0, bytes);
                 }
                 System.out.println("\n"+sendFile+" File sent");
-                System.out.print("myftp> ");
+                // System.out.print("myftp> ");
                 dos.writeUTF("file upload complete..");
                 System.out.println("file upload complete..");
                 procTable.remove(cid);
