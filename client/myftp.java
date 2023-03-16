@@ -42,38 +42,38 @@ public class myftp {
                 else if(cmd.split(" ", 2)[0].equals("put"))
                     put(cmd);
                 if(cmd.trim().startsWith("cd") && cmd.trim().endsWith("&")) {
-                    Thread cdThread = new Thread(new CDInBackend(hostname, nport, cmd, procTable, rmFiles));
+                    Thread cdThread = new Thread(new CDInBackend(hostname, nport, cmd, procTable));
                     cdThread.start();
                     continue;
                 }
                 else if(cmd.split(" ", 2)[0].equals("cd"))
                     chdir(cmd);
-                if(cmd.trim().startsWith("pwd") && cmd.trim().endsWith("&")) {
-                    Thread pwdThread = new Thread(new PWDInBackend(hostname, nport, cmd, procTable, rmFiles));
-                    pwdThread.start();
-                    continue;
-                }
+                // if(cmd.trim().startsWith("pwd") && cmd.trim().endsWith("&")) {
+                //     Thread pwdThread = new Thread(new PWDInBackend(hostname, nport, cmd, procTable, rmFiles));
+                //     pwdThread.start();
+                //     continue;
+                // }
                 else if(cmd.split(" ", 2)[0].equals("pwd"))
                     abspath(cmd);
-                if(cmd.trim().startsWith("delete") && cmd.trim().endsWith("&")) {
-                    Thread delThread = new Thread(new DELInBackend(hostname, nport, cmd, procTable, rmFiles));
-                    delThread.start();
-                    continue;
-                }
+                // if(cmd.trim().startsWith("delete") && cmd.trim().endsWith("&")) {
+                //     Thread delThread = new Thread(new DELInBackend(hostname, nport, cmd, procTable, rmFiles));
+                //     delThread.start();
+                //     continue;
+                // }
                 else if(cmd.split(" ", 2)[0].equals("delete"))
                     delete(cmd);
-                if(cmd.trim().startsWith("mkdir") && cmd.trim().endsWith("&")) {
-                    Thread mkThread = new Thread(new MKInBackend(hostname, nport, cmd, procTable, rmFiles));
-                    mkThread.start();
-                    continue;
-                }
+                // if(cmd.trim().startsWith("mkdir") && cmd.trim().endsWith("&")) {
+                //     Thread mkThread = new Thread(new MKInBackend(hostname, nport, cmd, procTable, rmFiles));
+                //     mkThread.start();
+                //     continue;
+                // }
                 else if(cmd.split(" ", 2)[0].equals("mkdir"))
                     mkdir(cmd);
-                if(cmd.trim().startsWith("mkdir") && cmd.trim().endsWith("&")) {
-                    Thread lsThread = new Thread(new LSInBackend(hostname, nport, cmd, procTable, rmFiles));
-                    lsThread.start();
-                    continue;
-                }
+                // if(cmd.trim().startsWith("mkdir") && cmd.trim().endsWith("&")) {
+                //     Thread lsThread = new Thread(new LSInBackend(hostname, nport, cmd, procTable, rmFiles));
+                //     lsThread.start();
+                //     continue;
+                // }
                 else if(cmd.split(" ", 2)[0].equals("ls"))
                     list(cmd);
                 else if(cmd.startsWith("terminate")) {
