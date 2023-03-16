@@ -370,7 +370,7 @@ class ClientThreadHandler implements Runnable{
                 }
             }
             int bytes = 0;
-            FileOutputStream fos = new FileOutputStream(getFile);
+            FileOutputStream fos = new FileOutputStream(getFile, true);
             long fileSize = dis.readLong(); // read file size
             System.out.println("receiving " + fileSize + " bytes...");
             byte[] buffer = new byte[4 * 1024];
