@@ -230,6 +230,7 @@ class ClientThreadHandler implements Runnable{
                 if(cmd.trim().equals("quit")) {
                     System.out.println("Until Next Time Dawgs !!!!");
                     clientInstance.close();
+                    Thread.stop();
                     return;
                 }
             }
