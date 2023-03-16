@@ -310,7 +310,7 @@ class PWDInBackend implements Runnable {
     private DataOutputStream dos;
     private String command;
 
-    print PWDInBackend(String hostname, int port, String command) {
+    public PWDInBackend(String hostname, int port, String command) {
         try {
             this.command = command;
             this.procTable = procTable;
@@ -320,14 +320,14 @@ class PWDInBackend implements Runnable {
         } catch(IOException io) {
             Logger.getLogger(PWDInBackend.class.getName()).log(Level.SEVERE, null, io);
         }
-        public void run() {
-            try {
-                dos.writeUTF(command.substring(0, command.length() - 1));
-                System.out.println(dis.readUTF());
-            } catch(IOException io) {
-                io.printStackTrace();
-            }           
-        }
+    }
+    public void run() {
+        try {
+            dos.writeUTF(command.substring(0, command.length() - 1));
+            System.out.println(dis.readUTF());
+        } catch(IOException io) {
+            io.printStackTrace();
+        }           
     }
 }
 class CDInBackend implements Runnable {
