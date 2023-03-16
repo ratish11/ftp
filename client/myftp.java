@@ -49,7 +49,7 @@ public class myftp {
                 else if(cmd.split(" ", 2)[0].equals("cd"))
                     chdir(cmd);
                 if(cmd.trim().startsWith("pwd") && cmd.trim().endsWith("&")) {
-                    Thread pwdThread = new Thread(new PWDInBackend(hostname, nport, cmd, procTable));
+                    Thread pwdThread = new Thread(new PWDInBackend(hostname, nport, cmd));
                     pwdThread.start();
                     continue;
                 }
