@@ -325,7 +325,7 @@ class CDInBackend implements Runnable {
     }
     public void run() {
         try {
-            dos.writeUTF(command.substring(0, command.length() - 1)));
+            dos.writeUTF(command.substring(0, command.length() - 1));
             String ack = dis.readUTF();
             if(ack.contains("Error")){
                 System.out.println(ack);
