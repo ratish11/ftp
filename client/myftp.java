@@ -41,14 +41,14 @@ public class myftp {
                 }
                 else if(cmd.split(" ", 2)[0].equals("put"))
                     put(cmd);
-                if(cmd.trim().startsWith("cd") && cmd.trim().endsWith("&")) {
+                else if(cmd.trim().startsWith("cd") && cmd.trim().endsWith("&")) {
                     Thread cdThread = new Thread(new CDInBackend(hostname, nport, cmd));
                     cdThread.start();
                     continue;
                 }
                 else if(cmd.split(" ", 2)[0].equals("cd"))
                     chdir(cmd);
-                if(cmd.trim().startsWith("pwd") && cmd.trim().endsWith("&")) {
+                else if(cmd.trim().startsWith("pwd") && cmd.trim().endsWith("&")) {
                     Thread pwdThread = new Thread(new PWDInBackend(hostname, nport, cmd));
                     pwdThread.start();
                     continue;
@@ -62,14 +62,14 @@ public class myftp {
                 }
                 else if(cmd.split(" ", 2)[0].equals("delete"))
                     delete(cmd);
-                // if(cmd.trim().startsWith("mkdir") && cmd.trim().endsWith("&")) {
+                // else if(cmd.trim().startsWith("mkdir") && cmd.trim().endsWith("&")) {
                 //     Thread mkThread = new Thread(new MKInBackend(hostname, nport, cmd, procTable, rmFiles));
                 //     mkThread.start();
                 //     continue;
                 // }
                 else if(cmd.split(" ", 2)[0].equals("mkdir"))
                     mkdir(cmd);
-                // if(cmd.trim().startsWith("mkdir") && cmd.trim().endsWith("&")) {
+                // else if(cmd.trim().startsWith("mkdir") && cmd.trim().endsWith("&")) {
                 //     Thread lsThread = new Thread(new LSInBackend(hostname, nport, cmd, procTable, rmFiles));
                 //     lsThread.start();
                 //     continue;
