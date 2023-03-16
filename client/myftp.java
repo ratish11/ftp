@@ -304,7 +304,7 @@ public class myftp {
         }
     }
 }
-class PWDInBackend(hostname, nport, cmd) implements Runnable {
+class PWDInBackend implements Runnable {
     private Socket s;
     private DataInputStream dis;
     private DataOutputStream dos;
