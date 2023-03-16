@@ -507,8 +507,7 @@ class ClientThreadHandler implements Runnable{
         try {
             if(!destdirname.isAbsolute()){
                 File f = new File(String.valueOf(cdir + "/" + destdirname));
-                System.out.println(" && cdir.canWrite()" +  cdir.canWrite());
-                if(!f.exists() && f.mkdir()) { // && cdir.canWrite()
+                if(!f.exists() && f.mkdir() && cdir.canWrite()) { 
                     dos.writeUTF("Directory " + f + " created");
                 } else {
                     dos.writeUTF("Error: Cannot create " + f);
