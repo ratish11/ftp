@@ -93,6 +93,7 @@ public class myftp {
         dos = new DataOutputStream(s.getOutputStream());
         dos.writeUTF(cmd);
         System.out.println("Until next time Dawgs.....!!!");
+        System.exit(0);
     }
     public static void get(String cmd) {
         try {
