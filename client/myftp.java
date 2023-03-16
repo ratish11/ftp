@@ -25,7 +25,8 @@ public class myftp {
                 Thread.sleep(500);
 //                Send command to server and call the function accordingly
                 System.out.print("\nmyftp> ");
-                String cmd = userInput.nextLine();
+                String input = userInput.nextLine();
+                String cmd = input.trim();
                 if(cmd.trim().startsWith("get") && cmd.trim().endsWith("&")) {
                     Thread getThread = new Thread(new GetInBackend(hostname, nport, cmd, procTable, rmFiles));
                     getThread.start();
