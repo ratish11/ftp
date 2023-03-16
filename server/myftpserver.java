@@ -386,7 +386,7 @@ class ClientThreadHandler implements Runnable{
                 }
                 fos.write(buffer, 0, bytes);
                 fileSize -= bytes;
-                Thread.sleep(5000); //remove this sleep later
+                // Thread.sleep(5000); //remove this sleep later
             }
             System.out.println(dis.readUTF());
             lockRecord.remove(path);
