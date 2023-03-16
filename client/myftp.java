@@ -42,17 +42,17 @@ public class myftp {
                 else if(cmd.split(" ", 2)[0].equals("put"))
                     put(cmd);
                 if(cmd.trim().startsWith("cd") && cmd.trim().endsWith("&")) {
-                    Thread cdThread = new Thread(new CDInBackend(hostname, nport, cmd, procTable));
+                    Thread cdThread = new Thread(new CDInBackend(hostname, nport, cmd));
                     cdThread.start();
                     continue;
                 }
                 else if(cmd.split(" ", 2)[0].equals("cd"))
                     chdir(cmd);
-                // if(cmd.trim().startsWith("pwd") && cmd.trim().endsWith("&")) {
-                //     Thread pwdThread = new Thread(new PWDInBackend(hostname, nport, cmd, procTable, rmFiles));
-                //     pwdThread.start();
-                //     continue;
-                // }
+                if(cmd.trim().startsWith("pwd") && cmd.trim().endsWith("&")) {
+                    Thread pwdThread = new Thread(new PWDInBackend(hostname, nport, cmd, procTable));
+                    pwdThread.start();
+                    continue;
+                }
                 else if(cmd.split(" ", 2)[0].equals("pwd"))
                     abspath(cmd);
                 // if(cmd.trim().startsWith("delete") && cmd.trim().endsWith("&")) {
@@ -304,15 +304,39 @@ public class myftp {
         }
     }
 }
+class PWDInBackend(hostname, nport, cmd) implements Runnable {
+    private Socket s;
+    private DataInputStream dis;
+    private DataOutputStream dos;
+    private String command;
 
+    print PWDInBackend(String hostname, int port, String command) {
+        try {
+            this.command = command;
+            this.procTable = procTable;
+            this.s = new Socket(hostname, port);
+            dis = new DataInputStream(this.s.getInputStream());
+            dos = new DataOutputStream(this.s.getOutputStream());
+        } catch(IOException io) {
+            Logger.getLogger(PWDInBackend.class.getName()).log(Level.SEVERE, null, io);
+        }
+        public void run() {
+            try {
+                dos.writeUTF(command.substring(0, command.length() - 1));
+                System.out.println(dis.readUTF());
+            } catch(IOException io) {
+                io.printStackTrace();
+            }           
+        }
+    }
+}
 class CDInBackend implements Runnable {
     private Socket s;
     private DataInputStream dis;
     private DataOutputStream dos;
     private String command;
-    HashMap<String, Boolean> procTable;
 
-    public CDInBackend(String hostname, int port, String command, HashMap<String, Boolean> procTable) {
+    public CDInBackend(String hostname, int port, String command) {
         try {
             this.command = command;
             this.procTable = procTable;
@@ -360,7 +384,7 @@ class PutInBackend implements Runnable {
     public synchronized void run() {
         try {
             try{
-                dos.writeUTF(command);
+                dos.writeUTF(command.substring(0, command.length() - 1));
             } catch(IOException io) {
                 io.printStackTrace();
                 return;
@@ -444,7 +468,7 @@ class GetInBackend implements Runnable {
     //Get the files from server passively
     public synchronized  void run() {
         try {
-            dos.writeUTF(command);
+            dos.writeUTF(command.substring(0, command.length() - 1));
             String response = dis.readUTF();
             if(!response.contains("sending")){
                 System.out.println(response); 

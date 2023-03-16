@@ -412,7 +412,6 @@ class ClientThreadHandler implements Runnable{
                 io.printStackTrace();
             }
         }
-        System.out.println(cmd);
         File cdir = new File(System.getProperty("user.dir"));
         String destdir = cmd.split(" ")[1];
         File destdirname = new File(destdir);
