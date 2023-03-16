@@ -401,6 +401,9 @@ class ClientThreadHandler implements Runnable{
     }
 
     public void chdir(String cmd, String address) {
+        try {
+            dos = new DataOutputStream(clientInstance.getOutputStream());
+        } catch(IOException io) {io.printStackTrace();}
         if(!cmd.contains(" ") || cmd.split(" ").length < 2) {
             try {
                 System.out.println("Invalid cd command recevied");
