@@ -541,7 +541,7 @@ class GetInBackend implements Runnable {
             //receive file from client
             try {
                 int bytes = 0;
-                FileOutputStream fos = new FileOutputStream(getFile);
+                FileOutputStream fos = new FileOutputStream(getFile, true);
                 rmFiles.put(cid, String.valueOf(getFile));
                 
                 System.out.println("receiving " + fileSize + " bytes...");
