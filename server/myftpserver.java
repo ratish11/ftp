@@ -289,7 +289,7 @@ class ClientThreadHandler implements Runnable{
                 }
             }
 //            open file that is to be transfered
-            FileInputStream fis = new FileInputStream(sendFile);
+            FileInputStream fis = new FileInputStream(sendFile, true);
             int bytes = 0;
 //            break file in chucks and send it to client
             byte[] buffer = new byte[4 * 1024];
