@@ -55,11 +55,11 @@ public class myftp {
                 }
                 else if(cmd.split(" ", 2)[0].equals("pwd"))
                     abspath(cmd);
-                // if(cmd.trim().startsWith("delete") && cmd.trim().endsWith("&")) {
-                //     Thread delThread = new Thread(new DELInBackend(hostname, nport, cmd, procTable, rmFiles));
-                //     delThread.start();
-                //     continue;
-                // }
+                if(cmd.trim().startsWith("delete") && cmd.trim().endsWith("&")) {
+                    Thread delThread = new Thread(new DELInBackend(hostname, nport, cmd));
+                    delThread.start();
+                    continue;
+                }
                 else if(cmd.split(" ", 2)[0].equals("delete"))
                     delete(cmd);
                 // if(cmd.trim().startsWith("mkdir") && cmd.trim().endsWith("&")) {
@@ -331,6 +331,34 @@ class PWDInBackend implements Runnable {
         }           
     }
 }
+class DELInBackend implements Runnable {
+    private Socket s;
+    private DataInputStream dis;
+    private DataOutputStream dos;
+    private String command;
+
+    public DELInBackend(String hostname, int port, String command) {
+        try {
+            this.command = command;
+            this.s = new Socket(hostname, port);
+            dis = new DataInputStream(this.s.getInputStream());
+            dos = new DataOutputStream(this.s.getOutputStream());
+        } catch(IOException io) {
+            Logger.getLogger(CDInBackend.class.getName()).log(Level.SEVERE, null, io);
+            io.printStackTrace();
+        }
+    }
+    public void run() {
+        try {
+            dos.writeUTF(command.substring(0, command.length() - 1));
+            System.out.println(dis.readUTF());
+            dos.writeUTF("quit");
+            dos.flush();
+        } catch(IOException io) {
+            io.printStackTrace();
+        }
+    }
+}
 class CDInBackend implements Runnable {
     private Socket s;
     private DataInputStream dis;
@@ -350,12 +378,7 @@ class CDInBackend implements Runnable {
     public void run() {
         try {
             dos.writeUTF(command.substring(0, command.length() - 1));
-            String ack = dis.readUTF();
-            if(ack.contains("Error")){
-                System.out.println(ack);
-                return;
-            }
-            System.out.println(ack);
+            System.out.println(dis.readUTF());
             dos.writeUTF("quit");
             dos.flush();
         } catch(IOException io) {
