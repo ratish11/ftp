@@ -324,6 +324,8 @@ class PWDInBackend implements Runnable {
         try {
             dos.writeUTF(command.substring(0, command.length() - 1));
             System.out.println(dis.readUTF());
+            dos.writeUTF("quit");
+            dos.flush();
         } catch(IOException io) {
             io.printStackTrace();
         }           
@@ -354,6 +356,7 @@ class CDInBackend implements Runnable {
                 return;
             }
             System.out.println(ack);
+            dos.writeUTF("quit");
             dos.flush();
         } catch(IOException io) {
             io.printStackTrace();
