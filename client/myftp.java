@@ -82,6 +82,7 @@ public class myftp {
                 }
                 else if(cmd.trim().equals("quit")) {quit(cmd);s.close(); break;}
                 else if(cmd.trim().equals("quit thread")) {quit(cmd);s.close(); break;}
+                else if(cmd.equals("")) break;
                 else {System.out.println("Error: Invalid input");}
             }
         } catch (IOException io) {
