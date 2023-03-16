@@ -315,29 +315,58 @@ class ClientThreadHandler implements Runnable{
         }
     }
 
-    public synchronized void put(String cmd, String address) {
-        if(!cmd.contains(" ") || cmd.split(" ").length < 2) {
-            try {
-                System.out.println("Invalid put command recevied");
+    public synchronized void put(String cmd, String address) throws IOException {
+        try {
+            dos = new DataOutputStream(clientInstance.getOutputStream());
+            dis = new DataInputStream(clientInstance.getInputStream());
+        } catch(IOException io) {io.printStackTrace();}
+        try {
+            if(!cmd.contains(" ") || cmd.split(" ").length < 2) {
+                System.out.println("Invalid put command received");
                 dos.writeUTF("Error: Invalid 'put' command, check man page for details");
-            } catch (IOException io) {
-                io.printStackTrace();
+            } else {
+                dos.writeUTF("server ready to receive");
+            }
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
+        String cid;
+        while (true) {
+            UUID processID = UUID.randomUUID();
+            cid = processID.toString().substring(0, 4);
+            if (processRecord.containsKey(cid))
+                continue;
+            else {
+                processRecord.put(cid, Boolean.FALSE);
+                dos.writeUTF(cid.toString());
+                break;
             }
         }
+        //get the filename to be received
         String file = cmd.split(" ")[1];
         File cdir = new File(System.getProperty("user.dir"));
         File getFile = new File(cdir, file);
 //        receive file from client
         try {
-            if(getFile.exists() || !cdir.canWrite()) {
-//                error if file already exists or file cannot be written into the dir
-                dos.writeUTF("Error transferring file '" + file + "', file already exists or don't have access");
-                System.out.println("Error: file already exists or don't have access");
-                return;
-            }
-            else {
-                dos.writeUTF("ready to receive..");
-                System.out.println("receiving from client " + address);
+//            if(getFile.exists() || !cdir.canWrite()) {
+////                error if file already exists or file cannot be written into the dir
+//                dos.writeUTF("Error transferring file '" + file + "', file already exists or don't have access");
+//                System.out.println("Error: file already exists or don't have access");
+//                return;
+//            }
+//            else {
+//                dos.writeUTF("ready to receive..");
+//                System.out.println("receiving from client " + address);
+//            }
+
+            String path = getFile.getAbsolutePath();
+            while (true) {
+                if (!lockRecord.containsKey(path)) {
+                    lockRecord.put(path, true);
+                    break;
+                } else {
+                    Thread.sleep(500);
+                }
             }
             int bytes = 0;
             FileOutputStream fos = new FileOutputStream(getFile);
@@ -346,17 +375,26 @@ class ClientThreadHandler implements Runnable{
             byte[] buffer = new byte[4 * 1024];
             while (fileSize > 0 &&
                     (bytes = dis.read(buffer, 0, (int)Math.min(buffer.length, fileSize))) != -1) {
+                if (processRecord.get(cid).equals(Boolean.TRUE)) {
+                    fos.close();
+                    lockRecord.remove(path);
+                    processRecord.remove(cid);
+                    getFile.delete();
+                    return;
+                }
                 fos.write(buffer, 0, bytes);
                 fileSize -= bytes;
             }
             System.out.println(dis.readUTF());
+            lockRecord.remove(path);
+            processRecord.remove(cid);
             fos.close();
             dos.flush();
         } catch (IOException ex) {
             Logger.getLogger(ClientThreadHandler.class.getName()).log(Level.SEVERE, null, ex);
-        } /*catch (InterruptedException ex) {
+        } catch (InterruptedException ex) {
             Logger.getLogger(ClientThreadHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
     }
 
     public void chdir(String cmd, String address) {
