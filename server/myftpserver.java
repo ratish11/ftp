@@ -536,14 +536,17 @@ class ClientThreadHandler implements Runnable{
             else {
                 File dest = new File(cmd.split(" ")[cmd.split(" ").length -1]);
                 if(dest.isAbsolute() && dest.canRead() && dest.isDirectory()) {
+                    System.out.println("dest is abs");
                     lsPath = dest;
                     System.out.println(String.valueOf(lsPath));
                     dos.writeUTF("sending list...");
                 } else if (!dest.isAbsolute() && dest.canRead() && dest.isDirectory()) {
+                    System.out.println("dest is not abs");
                     lsPath = new File(String.valueOf(file),String.valueOf(dest));
                     System.out.println(String.valueOf(lsPath));
                     dos.writeUTF("sending list...");
                 } else {
+                    System.out.println(file.getAbsolutePath() + dest.getAbsolutePath());
                     dos.writeUTF("Error: Unknown Error");
                     System.out.println("Error: Unknown Error");
                     return;
