@@ -551,6 +551,9 @@ class ClientThreadHandler implements Runnable{
                         lsPath = new File(String.valueOf(file),String.valueOf(dest));
                         System.out.println(String.valueOf(lsPath));
                         fileList = lsPath.listFiles();
+                        dos.writeUTF("sending list...");
+                    } catch (IOException io) {
+                        io.printStackTrace();
                     } catch (Exception e) {
                         e.printStackTrace();
                         dos.writeUTF("Error: Unknown Error");
