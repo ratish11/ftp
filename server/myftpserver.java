@@ -546,6 +546,7 @@ class ClientThreadHandler implements Runnable{
                     System.out.println(String.valueOf(lsPath));
                     dos.writeUTF("sending list...");
                 } else {
+                    System.out.println("dir? " + dest.isAbsolute() + "can read? " + dest.canRead() + "dest.isDirectory()" + dest.isDirectory())
                     System.out.println(file.getAbsolutePath() + dest.getAbsolutePath());
                     dos.writeUTF("Error: Unknown Error");
                     System.out.println("Error: Unknown Error");
