@@ -322,19 +322,19 @@ class CDInBackend implements Runnable {
         } catch(IOException io) {
             Logger.getLogger(CDInBackend.class.getName()).log(Level.SEVERE, null, io);
         }
-        public void run() {
-            try {
-                dos.writeUTF(command.substring(0, command.length() - 1)));
-                String ack = dis.readUTF();
-                if(ack.contains("Error")){
-                    System.out.println(ack);
-                    return;
-                }
+    }
+    public void run() {
+        try {
+            dos.writeUTF(command.substring(0, command.length() - 1)));
+            String ack = dis.readUTF();
+            if(ack.contains("Error")){
                 System.out.println(ack);
-                dos.flush();
-            } catch(IOException io) {
-                io.printStackTrace();
+                return;
             }
+            System.out.println(ack);
+            dos.flush();
+        } catch(IOException io) {
+            io.printStackTrace();
         }
     }
 }
