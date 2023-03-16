@@ -228,6 +228,7 @@ class ClientThreadHandler implements Runnable{
                 if(cmd.split(" ", 2)[0].equals("ls"))
                     list(cmd);
                 if(cmd.trim().equals("quit")) {
+                    System.out.println("Untill Next Time Dawgs !!!!")
                     clientInstance.close();
                     break;
                 }

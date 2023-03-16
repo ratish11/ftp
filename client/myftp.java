@@ -157,6 +157,7 @@ public class myftp {
             }
             System.out.println("file transferred");
 //            close the file after transfer
+            dos.writeUTF("file transfer complete..");
             fis.close();
             dos.flush();
         } catch (IOException io) {
