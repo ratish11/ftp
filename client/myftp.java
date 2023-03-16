@@ -94,7 +94,7 @@ public class myftp {
         dos = new DataOutputStream(s.getOutputStream());
         dos.writeUTF(cmd);
         System.out.println("Until next time Dawgs.....!!!");
-        if(cmd.contains("thread"))
+        if(!cmd.contains("thread"))
             System.exit(0);
     }
     public static void get(String cmd) {
