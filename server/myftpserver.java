@@ -539,21 +539,23 @@ class ClientThreadHandler implements Runnable{
             else {
                 File dest = new File(cmd.split(" ")[cmd.split(" ").length -1]);
                 if(dest.isAbsolute() && dest.canRead() && dest.isDirectory()) {
-                    System.out.println("dest is abs");
                     lsPath = dest;
                     System.out.println(String.valueOf(lsPath));
                     dos.writeUTF("sending list...");
-                } else if (!dest.isAbsolute()) { // && dest.canRead() && dest.isDirectory()
-                    System.out.println("dest is not abs");
+                } else if (!dest.isAbsolute()&& dest.canRead() && dest.isDirectory()) { // if path is non abs
                     lsPath = new File(String.valueOf(file),String.valueOf(dest));
                     System.out.println(String.valueOf(lsPath));
                     dos.writeUTF("sending list...");
                 } else {
-                    System.out.println("dir? " + dest.isAbsolute() + "can read? " + dest.canRead() + "dest.isDirectory()" + dest.isDirectory());
-                    System.out.println(file.getAbsolutePath() + dest.getAbsolutePath());
-                    dos.writeUTF("Error: Unknown Error");
-                    System.out.println("Error: Unknown Error");
-                    return;
+                    try {
+                        lsPath = new File(String.valueOf(file),String.valueOf(dest));
+                        fileList = lsPath.listFiles();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        dos.writeUTF("Error: Unknown Error");
+                        System.out.println("Error: Unknown Error");
+                        return;
+                    }
                 }
             }
             fileList = lsPath.listFiles();
