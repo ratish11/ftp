@@ -123,6 +123,7 @@ public class myftp {
         } catch(IOException io) {
             io.printStackTrace();
         }
+
 //        get the filename to be transfered
         String file = cmd.split(" ")[1];
         File cdir=new File(System.getProperty("user.dir"));
@@ -141,6 +142,8 @@ public class myftp {
                     return;
                 }
             }
+            String cid = dis.readUTF();
+            System.out.println("Command ID is : " + cid);
 //            open file that is to be transfered
             System.out.println("Transferring file to server");
             FileInputStream fis = new FileInputStream(sendFile);
@@ -296,6 +299,12 @@ class PutInBackend implements Runnable {
     }
     public synchronized void run() {
         try {
+            try{
+                dos.write(command);
+            } catch(IOException io) {
+                io.printStackTrace();
+                return;
+            }
             String file = command.split(" ")[1];
             File cdir=new File(System.getProperty("user.dir"));
             File sendFile = new File(cdir, file);
