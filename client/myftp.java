@@ -54,7 +54,6 @@ public class myftp {
                 else if(cmd.startsWith("terminate")) {
                     Thread terminateThread = new Thread(new Terminate(hostname, tport, cmd, procTable));
                     terminateThread.start();
-                    quit(cmd);
                 }
                 else if(cmd.trim().equals("quit")) {System.out.println("Until next time Dawgs.....!!!");quit(cmd);s.close(); break;}
                 else {System.out.println("Error: Invalid input");}
@@ -336,10 +335,10 @@ class PutInBackend implements Runnable {
                 byte[] buffer = new byte[4*1024];
                 while((bytes = fis.read(buffer)) != -1) {
                     if(procTable.get(cid).equals(Boolean.TRUE)){
-                        procTable.remove(cid);
-                        fis.close();
                         dos.writeUTF("quit");
                         dos.flush();
+                        procTable.remove(cid);
+                        fis.close();
                         s.close();
                         return;
                     }
