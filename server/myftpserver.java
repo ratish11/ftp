@@ -543,7 +543,7 @@ class ClientThreadHandler implements Runnable{
                     lsPath = dest;
                     System.out.println(String.valueOf(lsPath));
                     dos.writeUTF("sending list...");
-                } else if (!dest.isAbsolute() && dest.canRead() && dest.isDirectory()) {
+                } else if (!dest.isAbsolute()) { // && dest.canRead() && dest.isDirectory()
                     System.out.println("dest is not abs");
                     lsPath = new File(String.valueOf(file),String.valueOf(dest));
                     System.out.println(String.valueOf(lsPath));
