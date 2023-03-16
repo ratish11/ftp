@@ -412,6 +412,7 @@ class ClientThreadHandler implements Runnable{
                 io.printStackTrace();
             }
         }
+        System.out.println(cmd);
         File cdir = new File(System.getProperty("user.dir"));
         String destdir = cmd.split(" ")[1];
         File destdirname = new File(destdir);
@@ -473,8 +474,8 @@ class ClientThreadHandler implements Runnable{
         try {
             if(!deleteFile.exists() || !deleteFile.canWrite()) {
 //                error if file doesn't exists or cannot be modified
-                dos.writeUTF("Error: no such file or directory exist");
-                System.out.println("Error: no such file or directory exist");
+                dos.writeUTF("Error: no such file or directory exist or don't have access");
+                System.out.println("Error: no such file or directory exist or don't have access");
                 return;
             }
             if(deleteFile.delete()){
@@ -542,7 +543,7 @@ class ClientThreadHandler implements Runnable{
                     lsPath = dest;
                     System.out.println(String.valueOf(lsPath));
                     dos.writeUTF("sending list...");
-                } else if (!dest.isAbsolute()&& dest.canRead() && dest.isDirectory()) { // if path is non abs
+                } else if (!dest.isAbsolute()&& dest.canRead() && dest.isDirectory()) { // if path is non abs, it does not detects ../../filesname
                     lsPath = new File(String.valueOf(file),String.valueOf(dest));
                     System.out.println(String.valueOf(lsPath));
                     dos.writeUTF("sending list...");

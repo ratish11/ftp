@@ -31,24 +31,49 @@ public class myftp {
                     Thread getThread = new Thread(new GetInBackend(hostname, nport, cmd, procTable, rmFiles));
                     getThread.start();
                     continue;
-                }
+                } 
+                else if(cmd.split(" ", 2)[0].equals("get"))
+                    get(cmd);
                 else if(cmd.trim().startsWith("put") && cmd.trim().endsWith("&")) {
                     Thread putThread = new Thread(new PutInBackend(hostname, nport  , cmd, procTable));
                     putThread.start();
                     continue;
                 }
-                else if(cmd.split(" ", 2)[0].equals("get"))
-                    get(cmd);
                 else if(cmd.split(" ", 2)[0].equals("put"))
                     put(cmd);
+                if(cmd.trim().startsWith("cd") && cmd.trim().endsWith("&")) {
+                    Thread cdThread = new Thread(new CDInBackend(hostname, nport, cmd, procTable, rmFiles));
+                    cdThread.start();
+                    continue;
+                }
                 else if(cmd.split(" ", 2)[0].equals("cd"))
                     chdir(cmd);
+                if(cmd.trim().startsWith("pwd") && cmd.trim().endsWith("&")) {
+                    Thread pwdThread = new Thread(new PWDInBackend(hostname, nport, cmd, procTable, rmFiles));
+                    pwdThread.start();
+                    continue;
+                }
                 else if(cmd.split(" ", 2)[0].equals("pwd"))
                     abspath(cmd);
+                if(cmd.trim().startsWith("delete") && cmd.trim().endsWith("&")) {
+                    Thread delThread = new Thread(new DELInBackend(hostname, nport, cmd, procTable, rmFiles));
+                    delThread.start();
+                    continue;
+                }
                 else if(cmd.split(" ", 2)[0].equals("delete"))
                     delete(cmd);
+                if(cmd.trim().startsWith("mkdir") && cmd.trim().endsWith("&")) {
+                    Thread mkThread = new Thread(new MKInBackend(hostname, nport, cmd, procTable, rmFiles));
+                    mkThread.start();
+                    continue;
+                }
                 else if(cmd.split(" ", 2)[0].equals("mkdir"))
                     mkdir(cmd);
+                if(cmd.trim().startsWith("mkdir") && cmd.trim().endsWith("&")) {
+                    Thread lsThread = new Thread(new LSInBackend(hostname, nport, cmd, procTable, rmFiles));
+                    lsThread.start();
+                    continue;
+                }
                 else if(cmd.split(" ", 2)[0].equals("ls"))
                     list(cmd);
                 else if(cmd.startsWith("terminate")) {
@@ -280,6 +305,40 @@ public class myftp {
     }
 }
 
+class CDInBackend implements Runnable {
+    private Socket s;
+    private DataInputStream dis;
+    private DataOutputStream dos;
+    private String command;
+    HashMap<String, Boolean> procTable;
+
+    public CDInBackend(String hostname, int port, String command, HashMap<String, Boolean> procTable) {
+        try {
+            this.command = command;
+            this.procTable = procTable;
+            this.s = new Socket(hostname, port);
+            dis = new DataInputStream(this.s.getInputStream());
+            dos = new DataOutputStream(this.s.getOutputStream());
+        } catch(IOException io) {
+            Logger.getLogger(CDInBackend.class.getName()).log(Level.SEVERE, null, io);
+        }
+        public void run() {
+            try {
+                dos.writeUTF(command.substring(0, command.length() - 1)));
+                String ack = dis.readUTF();
+                if(ack.contains("Error")){
+                    System.out.println(ack);
+                    return;
+                }
+                System.out.println(ack);
+                dos.flush();
+            } catch(IOException io) {
+                io.printStackTrace();
+            }
+        }
+    }
+}
+
 class PutInBackend implements Runnable {
     private Socket s;
     private DataInputStream dis;
@@ -478,7 +537,7 @@ class Terminate implements Runnable {
                 System.out.println(response);
             }
             if(!procTable.containsKey(cid)) {
-                System.out.println("CommandID" + cid + " either already terminated or doesn't exists");
+                System.out.println("CommandID " + cid + " either already terminated or doesn't exists");
             }
             s.close();
         } catch(IOException io) {
