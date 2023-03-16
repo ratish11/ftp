@@ -169,7 +169,7 @@ class TerminateService implements Runnable{
         if(processRecord.containsKey(String.valueOf(cid))) {
             try {
                 processRecord.put(cid, Boolean.TRUE);
-                dos.writeUTF("TERMINATE "+cid);
+                dos.writeUTF("terminating "+cid);
             } catch (IOException ex) {
                 Logger.getLogger(TerminateService.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -562,15 +562,9 @@ class GetInBackend implements Runnable {
                         return;
                     }
                 }
-//                if(getFile.exists() || !cdir.canWrite()) {
-////                error if file already exists or file cannot be written into the dir
-//                    System.out.println("Error: file already exists or don't have access");
-//                    return;
-//                }
                 rmFiles.remove(cid);
                 procTable.remove(cid);
                 System.out.println(getFile+" file received");
-                // System.out.print("myftp> ");
                 dos.writeUTF("quit thread");
                 s.close();
                 fos.close();
