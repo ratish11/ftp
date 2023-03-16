@@ -313,7 +313,6 @@ class PWDInBackend implements Runnable {
     public PWDInBackend(String hostname, int port, String command) {
         try {
             this.command = command;
-            this.procTable = procTable;
             this.s = new Socket(hostname, port);
             dis = new DataInputStream(this.s.getInputStream());
             dos = new DataOutputStream(this.s.getOutputStream());
@@ -339,7 +338,6 @@ class CDInBackend implements Runnable {
     public CDInBackend(String hostname, int port, String command) {
         try {
             this.command = command;
-            this.procTable = procTable;
             this.s = new Socket(hostname, port);
             dis = new DataInputStream(this.s.getInputStream());
             dos = new DataOutputStream(this.s.getOutputStream());
