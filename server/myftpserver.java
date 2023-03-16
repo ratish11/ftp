@@ -300,8 +300,6 @@ class ClientThreadHandler implements Runnable{
                     return;
                 }
                 dos.write(buffer, 0, bytes);
-                Thread.sleep(5000); //remove this sleep later
-                
             }
             lockRecord.remove(path);
             processRecord.remove(id);
