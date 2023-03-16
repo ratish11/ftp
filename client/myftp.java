@@ -63,7 +63,7 @@ public class myftp {
                 else if(cmd.split(" ", 2)[0].equals("delete"))
                     delete(cmd);
                 else if(cmd.trim().startsWith("mkdir") && cmd.trim().endsWith("&")) {
-                    Thread mkThread = new Thread(new MKInBackend(hostname, nport, cmd,));
+                    Thread mkThread = new Thread(new MKInBackend(hostname, nport, cmd));
                     mkThread.start();
                     continue;
                 }
