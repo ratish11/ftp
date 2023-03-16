@@ -347,7 +347,7 @@ class PutInBackend implements Runnable {
                 System.out.println("\n"+sendFile+" File sent");
                 System.out.print("myftp> ");
                 dos.writeUTF("file upload complete..");
-                System.out.println("file upload complete..")
+                System.out.println("file upload complete..");
                 procTable.remove(cid);
                 dos.writeUTF("quit");
                 //close the file after transfer and quit the thread and close connection
