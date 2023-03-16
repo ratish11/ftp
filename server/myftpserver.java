@@ -342,6 +342,7 @@ class ClientThreadHandler implements Runnable{
                 break;
             }
         }
+
         //get the filename to be received
         String file = cmd.split(" ")[1];
         File cdir = new File(System.getProperty("user.dir"));
@@ -373,6 +374,7 @@ class ClientThreadHandler implements Runnable{
             long fileSize = dis.readLong(); // read file size
             System.out.println("receiving " + fileSize + " bytes...");
             byte[] buffer = new byte[4 * 1024];
+            Thread.sleep(5000); //remove this sleep later
             while (fileSize > 0 &&
                     (bytes = dis.read(buffer, 0, (int)Math.min(buffer.length, fileSize))) != -1) {
                 if (processRecord.get(cid).equals(Boolean.TRUE)) {
