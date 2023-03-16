@@ -426,15 +426,18 @@ class ClientThreadHandler implements Runnable{
                 return;
             }
             if(!destdirname.isAbsolute()){ // && destdirname.isDirectory()
-                System.setProperty("user.dir", String.valueOf(cdir + "/" + destdirname));
-                dos.writeUTF("Directory is set to "+System.getProperty("user.dir"));
-                return;
+                try {
+                    System.setProperty("user.dir", String.valueOf(cdir + "/" + destdirname));
+                    dos.writeUTF("Directory is set to "+System.getProperty("user.dir"));
+                    return;
+                } catch (Exception e) {
+                    System.out.println("Error: directory doesn't exists!");
+                    dos.writeUTF("Error: directory doesn't exists!");
+                    e.printStackTrace();
+                    return;
+                }
             }
-            if(!destdirname.isDirectory()) {
-                System.out.println("Error: directory doesn't exists!");
-                dos.writeUTF("Error: directory doesn't exists!");
-                return;
-            }
+            
             System.setProperty("user.dir", String.valueOf(destdirname));
             dos.writeUTF("INFO: directory changed to " + destdirname);
             System.out.println("INFO: directory changed to " + destdirname);
