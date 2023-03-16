@@ -301,7 +301,7 @@ class PutInBackend implements Runnable {
     public synchronized void run() {
         try {
             try{
-                dos.write(command);
+                dos.writeUTF(command);
             } catch(IOException io) {
                 io.printStackTrace();
                 return;
