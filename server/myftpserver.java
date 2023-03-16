@@ -546,7 +546,7 @@ class ClientThreadHandler implements Runnable{
                 } else if (!dest.isAbsolute()&& dest.canRead() && dest.isDirectory()) { // if path is non abs, it does not detects ../../filesname
                     lsPath = new File(String.valueOf(file),String.valueOf(dest));
                     System.out.println(String.valueOf(lsPath));
-                    dos.writeUTF("sending list...");
+                    dos.writeUTF("1st else if sending list...");
                 } else {
                     try {
                         lsPath = new File(String.valueOf(file),String.valueOf(dest));
