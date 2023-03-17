@@ -668,6 +668,7 @@ class Terminate implements Runnable {
             String cid = command.split(" ")[1];
             dos.writeUTF(command);
             String response = dis.readUTF();
+            System.out.println(response);
             if(response.contains("terminating") && procTable.containsKey(cid)){
                 procTable.put(cid, Boolean.TRUE);
                 System.out.println("Terminating command: " + cid);
