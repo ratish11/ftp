@@ -138,7 +138,8 @@ public class myftp {
                         fos.write(buffer, 0, bytes);
                         fileSize -= bytes;
                     } else {
-                        getFile.delete();
+                        System.out.print("terminating simple get"); 
+                        // getFile.delete();
                         // rmFiles.remove(cid);
                         // procTable.remove(cid);
                         fos.close();
@@ -675,6 +676,7 @@ class Terminate implements Runnable {
 
     public void run() {
         try {
+            System.out.println(Arrays.asList(procTable));
             String cid = command.split(" ")[1];
             dos.writeUTF(command);
             String response = dis.readUTF();
