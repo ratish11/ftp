@@ -326,7 +326,7 @@ class LSInBackend implements Runnable {
         }
     }
     public void run() {
-        File[] flies = null;
+        File[] files = null;
         try {
                 try {
                 dos.writeUTF(command.substring(0, command.length() - 1));
