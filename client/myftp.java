@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Scanner;
 import java.util.HashMap;
+import java.util.Arrays;
 
 public class myftp {
     private static Socket s = null;
