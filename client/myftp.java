@@ -16,7 +16,7 @@ public class myftp {
     private static int tport = 0;
     private static HashMap<String, Boolean> procTable; //procTable(Command ID, Command termination status)
     private static HashMap<String, String> rmFiles;   //rmFiles(Command ID, File absPath)
-
+    this.procTable = procTable;
     private static void interactiveShell() {
         Scanner userInput = new Scanner(System.in);
         try {
@@ -100,7 +100,6 @@ public class myftp {
             System.exit(0);
     }
     public static void get(String cmd) {
-        this.procTable = procTable;
         try {
             dis = new DataInputStream(s.getInputStream());
             dos = new DataOutputStream(s.getOutputStream());
