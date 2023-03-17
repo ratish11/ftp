@@ -295,13 +295,13 @@ class ClientThreadHandler implements Runnable{
             byte[] buffer = new byte[4 * 1024];
             while ((bytes = fis.read(buffer)) != -1) {
                 if (processRecord.get(id).equals(Boolean.TRUE)) {
-                    System.out.println("processRecord.get(id).equals(Boolean.TRUE)");
+                    System.out.println("get command " + id + " terminated");
                     fis.close();
                     lockRecord.remove(id);
                     processRecord.remove(id);
                     return;
                 }
-                System.out.println(".equals(Boolean.TRUE)");
+                // System.out.println(".equals(Boolean.TRUE)");
                 dos.write(buffer, 0, bytes);
             }
             lockRecord.remove(path);
