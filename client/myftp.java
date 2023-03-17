@@ -135,6 +135,7 @@ public class myftp {
             while (fileSize > 0 &&
                     (bytes = dis.read(buffer, 0, (int)Math.min(buffer.length, fileSize))) != -1) {
                 if(!getFile.exists() || cdir.canWrite()) {
+                    System.out.println("here");
                     fos.write(buffer, 0, bytes);
                 }
                 fileSize -= bytes;
