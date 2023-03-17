@@ -276,7 +276,7 @@ class ClientThreadHandler implements Runnable{
                 else {
                     processRecord.put(id, Boolean.FALSE);
                     dos.writeUTF(id.toString()); //sending command id to client
-                    lockRecord.put(id, Boolean.FALSE);
+                    processRecord.put(id, Boolean.FALSE);
                     break;
                 }
             }
