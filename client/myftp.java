@@ -315,7 +315,7 @@ class LSInBackend implements Runnable {
     private DataOutputStream dos;
     private String command;
 
-    public MKInBackend(String hostname, int port, String command) {
+    public LSInBackend(String hostname, int port, String command) {
         try {
             this.command = command;
             this.s = new Socket(hostname, port);
