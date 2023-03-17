@@ -343,16 +343,16 @@ class LSInBackend implements Runnable {
                 ObjectInputStream inFiles = new ObjectInputStream(s.getInputStream());
                 // Read the array of files
                 files = (File[]) inFiles.readObject();
+                // Print the file name for each file
+                for(File file: files){
+                    System.out.println(file.getName() + " ");
+                }
             }
             catch (ClassNotFoundException cl) {
                 cl.printStackTrace();
             }
             catch (IOException io) {
                 io.printStackTrace();
-            }
-            // Print the file name for each file
-            for(File file: files){
-                System.out.println(file.getName() + " ");
             }
             dos.writeUTF("quit thread");
             dos.flush();
