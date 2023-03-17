@@ -326,6 +326,7 @@ class LSInBackend implements Runnable {
         }
     }
     public void run() {
+        File[] flies = null;
         try {
                 try {
                 dos.writeUTF(command.substring(0, command.length() - 1));
@@ -338,7 +339,6 @@ class LSInBackend implements Runnable {
                 io.printStackTrace();
                 return;
             }
-            File[] flies = null;
             try {
                 ObjectInputStream inFiles = new ObjectInputStream(s.getInputStream());
                 // Read the array of files
