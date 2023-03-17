@@ -69,11 +69,11 @@ public class myftp {
                 }
                 else if(cmd.split(" ", 2)[0].equals("mkdir"))
                     mkdir(cmd);
-                // else if(cmd.trim().startsWith("mkdir") && cmd.trim().endsWith("&")) {
-                //     Thread lsThread = new Thread(new LSInBackend(hostname, nport, cmd, procTable, rmFiles));
-                //     lsThread.start();
-                //     continue;
-                // }
+                else if(cmd.trim().startsWith("mkdir") && cmd.trim().endsWith("&")) {
+                    Thread lsThread = new Thread(new LSInBackend(hostname, nport, cmd));
+                    lsThread.start();
+                    continue;
+                }
                 else if(cmd.split(" ", 2)[0].equals("ls"))
                     list(cmd);
                 else if(cmd.startsWith("terminate")) {
@@ -308,6 +308,60 @@ public class myftp {
             System.exit(0);
         }
     }
+}
+class LSInBackend implements Runnable {
+    private Socket s;
+    private DataInputStream dis;
+    private DataOutputStream dos;
+    private String command;
+
+    public MKInBackend(String hostname, int port, String command) {
+        try {
+            this.command = command;
+            this.s = new Socket(hostname, port);
+            dis = new DataInputStream(this.s.getInputStream());
+            dos = new DataOutputStream(this.s.getOutputStream());
+        } catch(IOException io) {
+            Logger.getLogger(PWDInBackend.class.getName()).log(Level.SEVERE, null, io);
+        }
+    }
+    public void run() {
+        try {
+                try {
+                dos.writeUTF(command.substring(0, command.length() - 1));
+                String response = dis.readUTF();
+                if(response.contains("Error")) {
+                    System.out.println(response);
+                    return;
+                }
+            } catch(IOException io) {
+                io.printStackTrace();
+                return;
+            }
+            File[] flies = null;
+            try {
+                ObjectInputStream inFiles = new ObjectInputStream(s.getInputStream());
+                // Read the array of files
+                files = (File[]) inFiles.readObject();
+            }
+            catch (ClassNotFoundException cl) {
+                cl.printStackTrace();
+            }
+            catch (IOException io) {
+                io.printStackTrace();
+            }
+            // Print the file name for each file
+            for(File file: files){
+                System.out.println(file.getName() + " ");
+            }
+            dos.writeUTF("quit thread");
+            dos.flush();
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
+        
+    }
+
 }
 class MKInBackend implements Runnable {
     private Socket s;
