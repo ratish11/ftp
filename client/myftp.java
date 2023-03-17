@@ -16,7 +16,7 @@ public class myftp {
     private static int tport = 0;
     private static HashMap<String, Boolean> procTable; //procTable(Command ID, Command termination status)
     private static HashMap<String, String> rmFiles;   //rmFiles(Command ID, File absPath)
-    this.procTable = procTable;
+
     private static void interactiveShell() {
         Scanner userInput = new Scanner(System.in);
         try {
@@ -682,7 +682,7 @@ class Terminate implements Runnable {
             dos.writeUTF(command);
             String response = dis.readUTF();
             System.out.println(response);
-            if(response.contains("terminating") && procTable.containsKey(cid)){
+            if(response.contains("terminating")){ //&& procTable.containsKey(cid)
                 procTable.put(cid, Boolean.TRUE);
                 System.out.println("Terminating command: " + cid);
             }
