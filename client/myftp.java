@@ -134,11 +134,20 @@ public class myftp {
             byte[] buffer = new byte[4 * 1024];
             while (fileSize > 0 &&
                     (bytes = dis.read(buffer, 0, (int)Math.min(buffer.length, fileSize))) != -1) {
-                if(!getFile.exists() || cdir.canWrite()) {
+                    if(!procTable.get(cid).equals(Boolean.TRUE)) {
+                        fos.write(buffer, 0, bytes);
+                        fileSize -= bytes;
+                    } else {
+                        getFile.delete();
+                        // rmFiles.remove(cid);
+                        // procTable.remove(cid);
+                        fos.close();
+                        dos.flush();
+                        // s.close();
+                        return;
+                    }
+
                     // System.out.println("here");
-                    fos.write(buffer, 0, bytes);
-                }
-                fileSize -= bytes;
             }
             System.out.println("File is Received");
             fos.close();
