@@ -578,6 +578,7 @@ class GetInBackend implements Runnable {
     //Get the files from server passively
     public synchronized  void run() {
         try {
+            String file = command.split(" ")[1];
             File cdir = new File(System.getProperty("user.dir"));
             File getFile = new File(cdir, file);
             if(!cdir.canWrite() && !getFile.isFile()) { //getFile.exists() || if append is not desirable
@@ -598,7 +599,7 @@ class GetInBackend implements Runnable {
             procTable.put(cid, Boolean.FALSE);
             //get file size to be received
             //start getting
-            String file = command.split(" ")[1];
+            
             
             
             //receive file from client
