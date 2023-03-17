@@ -302,7 +302,7 @@ class ClientThreadHandler implements Runnable{
                     processRecord.remove(id);
                     return;
                 }
-                System.out.println("dos.write(buffer, 0, bytes);");
+                System.out.println(processRecord.get(id));
                 dos.write(buffer, 0, bytes);
             }
             lockRecord.remove(path);
