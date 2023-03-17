@@ -276,7 +276,6 @@ class ClientThreadHandler implements Runnable{
                 else {
                     processRecord.put(id, Boolean.FALSE);
                     dos.writeUTF(id.toString()); //sending command id to client
-                    processRecord.put(id, Boolean.FALSE);
                     break;
                 }
             }
@@ -296,7 +295,7 @@ class ClientThreadHandler implements Runnable{
             byte[] buffer = new byte[4 * 1024];
             while ((bytes = fis.read(buffer)) != -1) {
                 if (processRecord.get(id).equals(Boolean.TRUE)) {
-                    System.out.println("processRecord.get(id).equals(Boolean.TRUE)");
+                    // System.out.println("processRecord.get(id).equals(Boolean.TRUE)");
                     fis.close();
                     lockRecord.remove(id);
                     processRecord.remove(id);
