@@ -83,7 +83,7 @@ public class myftp {
                 else if(cmd.trim().equals("quit")) {quit(cmd);s.close(); break;}
                 else if(cmd.trim().equals("quit thread")) {quit(cmd);s.close(); break;}
                 else if(cmd.equals("")) {continue;}
-                else {System.out.println("Error: Invalid input");}
+                else {System.out.println("bash: " + cmd + ": command not found...");}
             }
         } catch (IOException io) {
             Logger.getLogger(myftp.class.getName()).log(Level.SEVERE, null, io);
@@ -578,6 +578,7 @@ class GetInBackend implements Runnable {
     //Get the files from server passively
     public synchronized  void run() {
         try {
+            File cdir = new File(System.getProperty("user.dir"));
             if(!cdir.canWrite() && !getFile.isFile()) { //getFile.exists() || if append is not desirable
 //                error if file already exists or file cannot be written into the dir
                 System.out.println("Error: don't have access to write or is a directory");
@@ -597,7 +598,7 @@ class GetInBackend implements Runnable {
             //get file size to be received
             //start getting
             String file = command.split(" ")[1];
-            File cdir = new File(System.getProperty("user.dir"));
+            
             File getFile = new File(cdir, file);
             //receive file from client
             try {
