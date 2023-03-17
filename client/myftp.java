@@ -118,9 +118,9 @@ public class myftp {
         File getFile = new File(cdir, file);
 //        receive file from client
         try {
-            if(!cdir.canWrite()) { //getFile.exists() || if append is not desirable
+            if(!cdir.canWrite() && !getFile.isFile()) { //getFile.exists() || if append is not desirable
 //                error if file already exists or file cannot be written into the dir
-                System.out.println("Error: don't have access to write");
+                System.out.println("Error: don't have access to write or is a directory");
                 return;
             }
             int bytes = 0;
@@ -578,6 +578,12 @@ class GetInBackend implements Runnable {
     //Get the files from server passively
     public synchronized  void run() {
         try {
+            if(!cdir.canWrite() && !getFile.isFile()) { //getFile.exists() || if append is not desirable
+//                error if file already exists or file cannot be written into the dir
+                System.out.println("Error: don't have access to write or is a directory");
+                dos.writeUTF("quit thread");
+                return;
+            }
             dos.writeUTF(command.substring(0, command.length() - 1));
             String response = dis.readUTF();
             if(!response.contains("sending")){
