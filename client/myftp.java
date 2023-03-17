@@ -328,8 +328,8 @@ class LSInBackend implements Runnable {
     public void run() {
         File[] files = null;
         try {
-                try {
-                dos.writeUTF(command.substring(0, command.length() - 1));
+            try {
+                dos.writeUTF(command.substring(0, command.length() - 1).trim());
                 String response = dis.readUTF();
                 if(response.contains("Error")) {
                     System.out.println(response);
