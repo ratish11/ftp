@@ -100,6 +100,7 @@ public class myftp {
             System.exit(0);
     }
     public static void get(String cmd) {
+        this.procTable = procTable;
         try {
             dis = new DataInputStream(s.getInputStream());
             dos = new DataOutputStream(s.getOutputStream());
