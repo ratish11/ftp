@@ -129,7 +129,7 @@ public class myftp {
             System.out.println("receiving " + fileSize + " bytes...");
             String cid = dis.readUTF();
             System.out.print("Command ID : " + cid + "\n");
-            procTable.put(cid, Boolean);
+            procTable.put(cid, Boolean.FALSE);
             rmFiles.put(cid, String.valueOf(getFile));
             byte[] buffer = new byte[4 * 1024];
             while (fileSize > 0 &&
