@@ -579,6 +579,7 @@ class GetInBackend implements Runnable {
     public synchronized  void run() {
         try {
             File cdir = new File(System.getProperty("user.dir"));
+            File getFile = new File(cdir, file);
             if(!cdir.canWrite() && !getFile.isFile()) { //getFile.exists() || if append is not desirable
 //                error if file already exists or file cannot be written into the dir
                 System.out.println("Error: don't have access to write or is a directory");
@@ -599,7 +600,7 @@ class GetInBackend implements Runnable {
             //start getting
             String file = command.split(" ")[1];
             
-            File getFile = new File(cdir, file);
+            
             //receive file from client
             try {
                 int bytes = 0;
