@@ -69,7 +69,7 @@ public class myftp {
                 }
                 else if(cmd.split(" ", 2)[0].equals("mkdir"))
                     mkdir(cmd);
-                else if(cmd.trim().startsWith("mkdir") && cmd.trim().endsWith("&")) {
+                else if(cmd.trim().startsWith("ls") && cmd.trim().endsWith("&")) {
                     Thread lsThread = new Thread(new LSInBackend(hostname, nport, cmd));
                     lsThread.start();
                     continue;
