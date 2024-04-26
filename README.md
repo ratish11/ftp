@@ -20,14 +20,12 @@ How to Use
 
     javac myftp.java
 
-    Use code with caution.
 
 Run the program:
 Bash
 
 java myftp <hostname> <port_number> <termination_port_number>
 
-Use code with caution.
 
         Replace <hostname> with the hostname or IP address of the FTP server.
         Replace <port_number> with the port number on which the FTP server is listening (default: 21).
